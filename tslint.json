@@ -4,6 +4,14 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "object-literal-sort-keys": false,
+        "no-var-requires": false,
+        "variable-name": [
+            true,
+            "allow-leading-underscore",
+            "allow-pascal-case"
+        ]
+    },
     "rulesDirectory": []
 }

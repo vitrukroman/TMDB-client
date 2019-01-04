@@ -1,10 +1,10 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import "./styles/index.css"
-import { ApolloProvider } from "react-apollo"
-import { ApolloClient } from "apollo-client"
-import { createHttpLink } from "apollo-link-http"
-import { InMemoryCache } from "apollo-cache-inmemory"
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-client";
+import { createHttpLink } from "apollo-link-http";
+import React from "react";
+import { ApolloProvider } from "react-apollo";
+import ReactDOM from "react-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
@@ -17,7 +17,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <div/>
+    <CssBaseline>
+      <div/>
+    </CssBaseline>
   </ApolloProvider>,
   document.getElementById("root"),
 );
