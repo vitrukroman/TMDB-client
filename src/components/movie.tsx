@@ -1,7 +1,6 @@
+import { gql } from "apollo-boost";
 import React from "react";
 import Query from "react-apollo/Query";
-import { gql } from "apollo-boost";
-
 
 const query = gql`
 {
@@ -36,19 +35,19 @@ export default () => {
   return <Query
     query={query}
   >
-    {(loading: boolean, error, data) => {
+    {((loading: boolean, error: any, data: any) => {
       if (loading) {
-        return <p>Loading...</p>
+        return <p>Loading...</p>;
       }
 
       if (error) {
-        return <p>Error</p>
+        return <p>Error</p>;
       }
 
       return <div>
         The movie
         {data}
-      </div>
-    }}
+      </div>;
+    }) as any}
   </Query>;
 };
