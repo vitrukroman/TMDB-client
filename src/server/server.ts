@@ -1,5 +1,5 @@
 import express from "express";
-import logger from "../logger";
+import logger from "./logger";
 import serverConfig from "./serverConfig";
 
 const server = express();

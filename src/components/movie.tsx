@@ -1,53 +1,24 @@
-import { gql } from "apollo-boost";
 import React from "react";
 import Query from "react-apollo/Query";
+import getMovie from "../graphql/queries/getMovie";
+import { GetMovie } from "../graphql/types/getMovie";
 
-const query = gql`
-{
-    movie (id: 426426) {
-        id
-        original_title
-        adult
-        status
-        genres {
-            id
-            name
-        }
-        budget
-        homepage
-        imdb_id
-        original_language
-        overview
-        popularity
-        keywords {
-            id
-            name
-        }
-        similarMovies {
-            id
-            title
-        }
-    }
-}
-`;
+class GetMovieQuery extends Query<GetMovie> {}
+
 export default () => {
-
-  return <Query
-    query={query}
+  return <GetMovieQuery
+    query={getMovie}
   >
-    {((loading: boolean, error: any, data: any) => {
-      if (loading) {
-        return <p>Loading...</p>;
+    {(result) => {
+      if (result.loading) {
+        return <span>loading...</span>;
       }
 
-      if (error) {
-        return <p>Error</p>;
+      if (result.error) {
+        return <span>error...</span>;
       }
 
-      return <div>
-        The movie
-        {data}
-      </div>;
-    }) as any}
-  </Query>;
+      return <span>{JSON.stringify(result.data!.movie, null, 2)}</span>;
+    }}
+  </GetMovieQuery>;
 };
