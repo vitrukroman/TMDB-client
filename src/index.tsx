@@ -5,6 +5,7 @@ import { createHttpLink } from "apollo-link-http";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
+import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
 import Movie from "./components/movie";
 
 const httpLink = createHttpLink({
@@ -19,7 +20,11 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <CssBaseline>
-      <Movie />
+      <BrowserRouter>
+        <Route exact path="/movie/:id" render={(props: RouteComponentProps<{
+          id: string,
+        }>) => <Movie id={props.match.params.id}/>}/>
+      </BrowserRouter>
     </CssBaseline>
   </ApolloProvider>,
   document.getElementById("root"),

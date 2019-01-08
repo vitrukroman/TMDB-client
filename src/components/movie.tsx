@@ -5,9 +5,16 @@ import { GetMovie } from "../graphql/types/getMovie";
 
 class GetMovieQuery extends Query<GetMovie> {}
 
-export default () => {
+interface IComponentProps {
+  id: string;
+}
+
+export default (props: IComponentProps) => {
   return <GetMovieQuery
     query={getMovie}
+    variables={{
+      id: Number(props.id),
+    }}
   >
     {(result) => {
       if (result.loading) {

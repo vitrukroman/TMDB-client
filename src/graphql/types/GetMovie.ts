@@ -45,3 +45,7 @@ export interface GetMovie_movie {
 export interface GetMovie {
   movie: GetMovie_movie | null;
 }
+
+export interface GetMovieVariables {
+  id: number;
+}

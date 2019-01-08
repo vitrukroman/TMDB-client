@@ -16,7 +16,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        type: 'javascript/auto',
+        type: "javascript/auto",
         test: /\.mjs$/,
         use: [],
       },
@@ -27,17 +27,16 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: "src/index.html",
     }),
   ],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
     port: process.env.PORT,
     historyApiFallback: true,
-    publicPath: "/",
   },
 };

@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost";
 
 export default gql`
-  query GetMovie {
-    movie (id: 426426) {
+  query GetMovie ($id: Int!) {
+    movie (id: $id) {
         id
         original_title
         adult
