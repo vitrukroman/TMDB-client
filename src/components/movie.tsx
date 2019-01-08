@@ -1,3 +1,4 @@
+import Typography from "@material-ui/core/Typography/Typography";
 import React from "react";
 import Query from "react-apollo/Query";
 import getMovie from "../graphql/queries/getMovie";
@@ -25,7 +26,16 @@ export default (props: IComponentProps) => {
         return <span>error...</span>;
       }
 
-      return <span>{JSON.stringify(result.data!.movie, null, 2)}</span>;
+      if (!result.data || !result.data.movie) {
+        return <span>movie not found</span>;
+      }
+
+      const movie = result.data.movie;
+      return <section>
+        <header>
+          <Typography variant="h1">{movie.original_title}</Typography>
+        </header>
+      </section>;
     }}
   </GetMovieQuery>;
 };

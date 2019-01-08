@@ -1,4 +1,5 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
@@ -7,6 +8,7 @@ import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
 import Movie from "./components/movie";
+import theme from "./styles/theme";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
@@ -19,13 +21,15 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <CssBaseline>
-      <BrowserRouter>
-        <Route exact path="/movie/:id" render={(props: RouteComponentProps<{
-          id: string,
-        }>) => <Movie id={props.match.params.id}/>}/>
-      </BrowserRouter>
-    </CssBaseline>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline>
+        <BrowserRouter>
+          <Route exact path="/movie/:id" render={(props: RouteComponentProps<{
+            id: string,
+          }>) => <Movie id={props.match.params.id}/>}/>
+        </BrowserRouter>
+      </CssBaseline>
+    </MuiThemeProvider>
   </ApolloProvider>,
   document.getElementById("root"),
 );
