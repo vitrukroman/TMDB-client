@@ -1,4 +1,5 @@
 import Chip from "@material-ui/core/Chip/Chip";
+import { green, red } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import FaceIcon from "@material-ui/icons/Face";
@@ -57,15 +58,38 @@ export default (props: IComponentProps) => {
 
         return <Chip label={actor.name} icon={<FaceIcon/>} color={color} variant="outlined"/>;
       })}</Grid>;
-      return <section>
+
+      const budgetRevenueDifference = movie.revenue - movie.budget;
+      const budgetRevenueSign = budgetRevenueDifference > 0 ? "+" : "-";
+
+      return <section style={{
+        padding: 8,
+      }}>
         <header>
           <Typography variant="h1">{movie.title}</Typography>
-          <Typography>{movie.tagline}</Typography>
+          <Typography variant="subtitle1">{movie.tagline}</Typography>
         </header>
         <main>
           <Typography>Budget: {numeral(movie.budget).format("$0,0")}</Typography>
-          <Typography>Revenue: {numeral(movie.revenue).format("$0,0")}</Typography>
-          <Typography>Genres: </Typography>{genreChips}
+          <div>
+            <Typography style={{
+              display: "inline",
+            }}>Revenue: {numeral(movie.revenue).format("$0,0")} </Typography>
+            <Typography style={{
+              display: "inline",
+              ...(budgetRevenueDifference > 0 && {
+                color: green[400],
+              }),
+              ...(budgetRevenueDifference <= 0 && {
+                color: red[400],
+              }),
+            }}>
+              ({budgetRevenueSign}{numeral(budgetRevenueDifference).format("$0,0")})
+            </Typography>
+          </div>
+          <Typography style={{
+            display: "",
+          }}>Genres: </Typography>{genreChips}
           <Typography>Cast: </Typography>{cast}
           <Typography>{movie.overview}</Typography>
           <Typography>Production countries: </Typography>{productionCountries}
