@@ -5,6 +5,7 @@ export default gql`
     movie (id: $id) {
         id
         original_title
+        title
         adult
         status
         genres {
@@ -25,6 +26,14 @@ export default gql`
             id
             title
         }
+        production_countries {
+          iso_3166_1
+          name
+        }
+        vote_average
+        vote_count
+        revenue
+        tagline
     }
 }
 `;

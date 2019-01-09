@@ -25,10 +25,17 @@ export interface GetMovie_movie_similarMovies {
   title: string;
 }
 
+export interface GetMovie_movie_production_countries {
+  __typename: "ProductionCountry";
+  iso_3166_1: string;
+  name: string;
+}
+
 export interface GetMovie_movie {
   __typename: "Movie";
   id: number;
   original_title: string;
+  title: string;
   adult: boolean | null;
   status: Status;
   genres: GetMovie_movie_genres[];
@@ -40,6 +47,11 @@ export interface GetMovie_movie {
   popularity: number;
   keywords: GetMovie_movie_keywords[] | null;
   similarMovies: GetMovie_movie_similarMovies[];
+  production_countries: GetMovie_movie_production_countries[];
+  vote_average: number;
+  vote_count: number;
+  revenue: number;
+  tagline: string | null;
 }
 
 export interface GetMovie {

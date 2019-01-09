@@ -1,4 +1,6 @@
+import Chip from "@material-ui/core/Chip/Chip";
 import Typography from "@material-ui/core/Typography/Typography";
+import numeral from "numeral";
 import React from "react";
 import Query from "react-apollo/Query";
 import getMovie from "../graphql/queries/getMovie";
@@ -31,10 +33,30 @@ export default (props: IComponentProps) => {
       }
 
       const movie = result.data.movie;
+
+      const genreChips = movie.genres.map((genre) => {
+        return <Chip label={genre.name} key={genre.id}/>;
+      });
+
+      const productionCountries = movie.production_countries.map((productionCountry) => {
+        return <Chip label={productionCountry.name} key={productionCountry.iso_3166_1}/>;
+      });
       return <section>
         <header>
-          <Typography variant="h1">{movie.original_title}</Typography>
+          <Typography variant="h1">{movie.title}</Typography>
+          <Typography variant="caption">{movie.tagline}</Typography>
         </header>
+        <main>
+          <Typography>Budget: {numeral(movie.budget).format("$0,0")}</Typography>
+          <Typography>Revenue: {numeral(movie.revenue).format("$0,0")}</Typography>
+          <Typography>Genres: </Typography>{genreChips}
+          <Typography>{movie.overview}</Typography>
+          <Typography>Popularity: {movie.popularity}</Typography>
+          <Typography>Production countries: </Typography>{productionCountries}
+          <Typography>Vote average: {movie.vote_average}</Typography>
+          <Typography>Vote count: {movie.vote_count}</Typography>
+
+        </main>
       </section>;
     }}
   </GetMovieQuery>;
