@@ -1,10 +1,13 @@
 import Chip from "@material-ui/core/Chip/Chip";
+import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
+import FaceIcon from "@material-ui/icons/Face";
 import numeral from "numeral";
 import React from "react";
 import Query from "react-apollo/Query";
 import getMovie from "../graphql/queries/getMovie";
 import { GetMovie } from "../graphql/types/getMovie";
+import Actor from "../models/actor";
 
 class GetMovieQuery extends Query<GetMovie> {}
 
@@ -41,17 +44,30 @@ export default (props: IComponentProps) => {
       const productionCountries = movie.production_countries.map((productionCountry) => {
         return <Chip label={productionCountry.name} key={productionCountry.iso_3166_1}/>;
       });
+
+      const cast = <Grid container justify="flex-start">{movie.cast.slice(0, 10).sort((person1, person2) => {
+        return person1.order < person2.order ? -1 : person1.order > person2.order ? 1 : 0;
+      }).map((person) => {
+        const actor = new Actor(person);
+        let color: "primary" | "secondary" = "primary";
+
+        if (actor.isFemale) {
+          color = "secondary";
+        }
+
+        return <Chip label={actor.name} icon={<FaceIcon/>} color={color} variant="outlined"/>;
+      })}</Grid>;
       return <section>
         <header>
           <Typography variant="h1">{movie.title}</Typography>
-          <Typography variant="caption">{movie.tagline}</Typography>
+          <Typography>{movie.tagline}</Typography>
         </header>
         <main>
           <Typography>Budget: {numeral(movie.budget).format("$0,0")}</Typography>
           <Typography>Revenue: {numeral(movie.revenue).format("$0,0")}</Typography>
           <Typography>Genres: </Typography>{genreChips}
+          <Typography>Cast: </Typography>{cast}
           <Typography>{movie.overview}</Typography>
-          <Typography>Popularity: {movie.popularity}</Typography>
           <Typography>Production countries: </Typography>{productionCountries}
           <Typography>Vote average: {movie.vote_average}</Typography>
           <Typography>Vote count: {movie.vote_count}</Typography>

@@ -6,18 +6,13 @@ export default gql`
         id
         original_title
         title
-        adult
-        status
         genres {
             id
             name
         }
         budget
-        homepage
         imdb_id
-        original_language
         overview
-        popularity
         keywords {
             id
             name
@@ -34,6 +29,13 @@ export default gql`
         vote_count
         revenue
         tagline
+        poster_path
+        cast {
+          name
+          order
+          character
+          gender
+        }
     }
 }
 `;

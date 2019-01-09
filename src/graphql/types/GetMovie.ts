@@ -1,8 +1,6 @@
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
-import { Status } from "./globalTypes";
-
 // ====================================================
 // GraphQL query operation: GetMovie
 // ====================================================
@@ -31,20 +29,23 @@ export interface GetMovie_movie_production_countries {
   name: string;
 }
 
+export interface GetMovie_movie_cast {
+  __typename: "Cast";
+  name: string;
+  order: number;
+  character: string;
+  gender: number | null;
+}
+
 export interface GetMovie_movie {
   __typename: "Movie";
   id: number;
   original_title: string;
   title: string;
-  adult: boolean | null;
-  status: Status;
   genres: GetMovie_movie_genres[];
   budget: number;
-  homepage: string | null;
   imdb_id: string | null;
-  original_language: string;
   overview: string | null;
-  popularity: number;
   keywords: GetMovie_movie_keywords[] | null;
   similarMovies: GetMovie_movie_similarMovies[];
   production_countries: GetMovie_movie_production_countries[];
@@ -52,6 +53,8 @@ export interface GetMovie_movie {
   vote_count: number;
   revenue: number;
   tagline: string | null;
+  poster_path: string | null;
+  cast: GetMovie_movie_cast[];
 }
 
 export interface GetMovie {
