@@ -57,8 +57,20 @@ export interface GetMovie_movie {
   cast: GetMovie_movie_cast[];
 }
 
+export interface GetMovie_configuration_images {
+  __typename: "ImageConfiguration";
+  base_url: string;
+  poster_sizes: string[];
+}
+
+export interface GetMovie_configuration {
+  __typename: "Configuration";
+  images: GetMovie_configuration_images;
+}
+
 export interface GetMovie {
-  movie: GetMovie_movie | null;
+  movie: GetMovie_movie;
+  configuration: GetMovie_configuration;
 }
 
 export interface GetMovieVariables {

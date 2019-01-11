@@ -37,5 +37,11 @@ export default gql`
           gender
         }
     }
+    configuration {
+      images {
+        base_url,
+        poster_sizes
+      }
+    }
 }
 `;
