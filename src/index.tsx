@@ -6,7 +6,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
-import { createHttpLink } from "apollo-link-http";
+import ApolloLink from "apollo-link";
+import { HttpLink } from "apollo-link-http";
+import withClientState from "apollo-link-state";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
@@ -15,13 +17,25 @@ import Layout from "./components/layout";
 import Movie from "./components/movie";
 import theme from "./styles/theme";
 
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
   uri: "http://localhost:4000",
 });
 
+const cache = new InMemoryCache();
+const stateLink = withClientState({
+  cache,
+  resolvers: {
+    Query: {
+      language: ( _obj, _args, context) => {
+        return "";
+      },
+    },
+  },
+});
+
 const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
+  link: ApolloLink.from([stateLink, httpLink]),
+  cache,
 });
 
 ReactDOM.render(

@@ -2,6 +2,7 @@ import { gql } from "apollo-boost";
 
 export default gql`
   query GetMovie ($id: Int!) {
+    language @client
     movie (id: $id) {
         id
         original_title
