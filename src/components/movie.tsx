@@ -86,13 +86,26 @@ export default (props: IComponentProps) => {
 
       return <section style={{
         padding: 8,
-        display: "flex",
-        flexDirection: "column",
+        gridGap: 8,
+        display: "grid",
+        gridTemplateAreas: `
+          "header"
+          "budgetInfo"
+          "poster"
+          "main"
+        `,
+        ...(smAndUp && {
+          gridTemplateAreas: `
+          "poster header"
+          "poster budgetInfo"
+          "poster main"
+        `,
+          gridTemplateRows: "56px 24px",
+        }),
       }}>
         <header style={{
-          marginBottom: 16,
+          gridArea: "header",
           display: "flex",
-          order: 1,
         }}>
           <div style={{
             display: "flex",
@@ -126,8 +139,8 @@ export default (props: IComponentProps) => {
           </div>
         </header>
         <div style={{
-          order: 2,
           marginBottom: 8,
+          gridArea: "budgetInfo",
         }}>
           <Typography style={{
             display: "inline",
@@ -146,25 +159,12 @@ export default (props: IComponentProps) => {
         </div>
         <img style={{
           maxWidth: "100%",
-          marginBottom: 8,
-          ...(smAndUp && {
-            margin: "0 8px 0 0",
-          }),
-          order: 3,
-          ...(smAndUp && {
-            order: 4,
-          }),
+          gridArea: "poster",
         }} src={movie.getPosterUrl(result.data.configuration.images.base_url, breakpoint)}/>
         <main style={{
-          order: 4,
-          ...(smAndUp && {
-            order: 3,
-          }),
+          gridArea: "main",
         }}>
-          <div style={{
-            marginBottom: 8,
-
-          }}>
+          <div >
             <Typography style={{
               display: "inline",
             }}>Genres: </Typography>

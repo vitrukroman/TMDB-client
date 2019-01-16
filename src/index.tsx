@@ -11,6 +11,7 @@ import React from "react";
 import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
+import Layout from "./components/layout";
 import Movie from "./components/movie";
 import theme from "./styles/theme";
 
@@ -28,9 +29,11 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <CssBaseline>
         <BrowserRouter>
-          <Route exact path="/movie/:id" render={(props: RouteComponentProps<{
-            id: string,
-          }>) => <Movie id={props.match.params.id}/>}/>
+          <Layout>
+            <Route exact path="/movie/:id" render={(props: RouteComponentProps<{
+              id: string,
+            }>) => <Movie id={props.match.params.id}/>}/>
+          </Layout>
         </BrowserRouter>
       </CssBaseline>
     </MuiThemeProvider>

@@ -7,11 +7,7 @@
     "rules": {
         "object-literal-sort-keys": false,
         "no-var-requires": false,
-        "variable-name": [
-            true,
-            "allow-leading-underscore",
-            "allow-pascal-case"
-        ]
+        "variable-name": false
     },
     "rulesDirectory": []
 }

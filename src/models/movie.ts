@@ -63,13 +63,13 @@ class Movie implements GetMovie_movie {
       case "xs":
         return "w500";
       case "sm":
-        return "w342";
+        return "w500";
       case "md":
         return "w500";
       case "lg":
         return "w500";
       case "xl":
-        return "w780";
+        return "w500";
       default:
         return assertNever(breakPoint);
     }
