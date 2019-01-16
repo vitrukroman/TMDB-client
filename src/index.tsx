@@ -1,3 +1,7 @@
+import { install } from "@material-ui/styles";
+
+install();
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { InMemoryCache } from "apollo-cache-inmemory";

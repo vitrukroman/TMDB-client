@@ -1,14 +1,17 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
+import numeral from "numeral";
 import {
-  GetMovie_movie, GetMovie_movie_cast, GetMovie_movie_genres, GetMovie_movie_keywords,
+  GetMovie_movie, GetMovie_movie_genres, GetMovie_movie_keywords,
   GetMovie_movie_production_countries,
   GetMovie_movie_similarMovies,
 } from "../graphql/types/GetMovie";
+import { assertNever } from "../utils/utils";
+import Actor from "./actor";
 
 class Movie implements GetMovie_movie {
   public readonly __typename: "Movie" = "Movie";
   public readonly budget: number;
-  public readonly cast: GetMovie_movie_cast[];
+  public readonly cast: Actor[];
   public readonly genres: GetMovie_movie_genres[];
   public readonly id: number;
   public readonly imdb_id: string | null;
@@ -26,7 +29,9 @@ class Movie implements GetMovie_movie {
 
   public constructor(props: GetMovie_movie) {
     this.budget = props.budget;
-    this.cast = [...props.cast];
+    this.cast = props.cast.map((cast) => new Actor(cast)).sort((person1, person2) => {
+      return person1.order < person2.order ? -1 : person1.order > person2.order ? 1 : 0;
+    });
     this.genres = [...props.genres];
     this.id = props.id;
     this.imdb_id = props.imdb_id;
@@ -55,13 +60,52 @@ class Movie implements GetMovie_movie {
 
   public getPosterWidthByBreakpoint(breakPoint: Breakpoint) {
     switch (breakPoint) {
-      case "xs": return "w154";
-      case "sm": return "w185";
-      case "md": return "w342";
-      case "lg": return "w500";
-      case "xl": return "w780";
-      default: return ne;
+      case "xs":
+        return "w500";
+      case "sm":
+        return "w342";
+      case "md":
+        return "w500";
+      case "lg":
+        return "w500";
+      case "xl":
+        return "w780";
+      default:
+        return assertNever(breakPoint);
     }
+  }
+
+  public getPosterUrl(baseUrl: string, breakPoint: Breakpoint) {
+    return [
+      baseUrl,
+      this.getPosterWidthByBreakpoint(breakPoint),
+      this.poster_path,
+    ].join("");
+  }
+
+  public get mainCast() {
+    return this.cast.slice(0, 10);
+  }
+
+  public get budgetRevenueDiff() {
+    return this.revenue - this.budget;
+  }
+
+  public get budgetRevenueDiffSign() {
+    return this.budgetRevenueDiff > 0 ? "+" : "-";
+
+  }
+
+  public get budgetFormatted() {
+    return numeral(this.budget).format("$0,0");
+  }
+
+  public get budgetRevenueDiffFormatted() {
+    return numeral(this.budgetRevenueDiff).format("$0,0");
+  }
+
+  public get budgetRevenueDiffFormattedWithSign() {
+    return this.budgetRevenueDiffSign + this.budgetRevenueDiffFormatted;
   }
 
 }
