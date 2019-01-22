@@ -138,7 +138,7 @@ export default (props: IComponentProps) => {
             }}>{movie.tagline}</Typography>
           </div>
         </header>
-        <div style={{
+        {!!movie.budget && !!movie.revenue && <div style={{
           marginBottom: 8,
           gridArea: "budgetInfo",
         }}>
@@ -156,7 +156,7 @@ export default (props: IComponentProps) => {
           }}>
             ({movie.budgetRevenueDiffFormattedWithSign})
           </Typography>
-        </div>
+        </div>}
         <img style={{
           maxWidth: "100%",
           gridArea: "poster",

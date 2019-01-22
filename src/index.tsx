@@ -6,9 +6,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
-import ApolloLink from "apollo-link";
+import { ApolloLink } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
-import withClientState from "apollo-link-state";
+import { withClientState } from "apollo-link-state";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
@@ -24,10 +24,23 @@ const httpLink = new HttpLink({
 const cache = new InMemoryCache();
 const stateLink = withClientState({
   cache,
+  defaults: {
+    language: "en",
+  },
   resolvers: {
-    Query: {
-      language: ( _obj, _args, context) => {
-        return "";
+    Mutation: {
+      updateLanguage(_: any, params: {
+        language: "string",
+      },             {
+        cache,
+      }: {
+        cache: InMemoryCache,
+      }) {
+        const data = {
+          language: params.language,
+        };
+
+        cache.writeData({ data });
       },
     },
   },
