@@ -53,6 +53,7 @@ export default (props: IComponentProps) => {
         return <span>movie not found</span>;
       }
 
+      debugger;
       const movie = new Movie(result.data.movie);
 
       const genreChips = movie.genres.map((genre) => {

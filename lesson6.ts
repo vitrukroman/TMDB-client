@@ -1,1 +1,0 @@
-type Yikes = Yikes[];

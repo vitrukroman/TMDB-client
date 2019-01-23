@@ -69,6 +69,7 @@ export interface GetMovie_configuration {
 }
 
 export interface GetMovie {
+  language: string;
   movie: GetMovie_movie;
   configuration: GetMovie_configuration;
 }

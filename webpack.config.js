@@ -19,10 +19,15 @@ module.exports = {
         test: /\.mjs$/,
         use: [],
       },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader'
+      }
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", ".graphql"],
   },
   plugins: [
     new HtmlWebpackPlugin({

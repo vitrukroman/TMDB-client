@@ -16,6 +16,7 @@ import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
 import Layout from "./components/layout";
 import Movie from "./components/movie";
 import theme from "./styles/theme";
+const typeDefs = require("./graphql/localSchema.graphql");
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000",
@@ -27,23 +28,8 @@ const stateLink = withClientState({
   defaults: {
     language: "en",
   },
-  resolvers: {
-    Mutation: {
-      updateLanguage(_: any, params: {
-        language: "string",
-      },             {
-        cache,
-      }: {
-        cache: InMemoryCache,
-      }) {
-        const data = {
-          language: params.language,
-        };
-
-        cache.writeData({ data });
-      },
-    },
-  },
+  resolvers: {},
+  typeDefs
 });
 
 const client = new ApolloClient({
