@@ -14,9 +14,11 @@ import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
 import Layout from "./components/layout";
-import Movie from "./components/movie";
+import Movie from "./components/movie/movie";
 import theme from "./styles/theme";
-const typeDefs = require("./graphql/localSchema.graphql");
+import Mutation from "./graphql/localSchema/resolvers/mutation";
+
+const typeDefs = require("./graphql/localSchema/localSchema.graphql");
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000",
@@ -26,10 +28,12 @@ const cache = new InMemoryCache();
 const stateLink = withClientState({
   cache,
   defaults: {
-    language: "en",
+    language: "uk",
   },
-  resolvers: {},
-  typeDefs
+  resolvers: {
+    Mutation,
+  },
+  typeDefs,
 });
 
 const client = new ApolloClient({

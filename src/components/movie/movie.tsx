@@ -10,10 +10,12 @@ import StarIcon from "@material-ui/icons/StarRounded";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
 import Query from "react-apollo/Query";
-import getMovie from "../graphql/queries/getMovie";
-import { GetMovie } from "../graphql/types/getMovie";
-import { useBreakPoint } from "../hooks/useBreakpoint";
-import Movie from "../models/movie";
+import getMovie from "./getMovieQuery";
+import { GetMovie } from "../../graphql/types/GetMovie";
+import { useBreakPoint } from "../../hooks/useBreakpoint";
+import Movie from "../../models/movie";
+import LanguagePicker from "../languagePicker";
+
 
 class GetMovieQuery extends Query<GetMovie> {}
 
@@ -53,7 +55,6 @@ export default (props: IComponentProps) => {
         return <span>movie not found</span>;
       }
 
-      debugger;
       const movie = new Movie(result.data.movie);
 
       const genreChips = movie.genres.map((genre) => {
@@ -104,6 +105,7 @@ export default (props: IComponentProps) => {
           gridTemplateRows: "56px 24px",
         }),
       }}>
+
         <header style={{
           gridArea: "header",
           display: "flex",
@@ -132,8 +134,18 @@ export default (props: IComponentProps) => {
               </Badge>
             </div>
           </div>
-          <div>
-            <Typography variant="h1">{movie.title}</Typography>
+          <div style={{
+            flex: "1 1 auto",
+          }}>
+
+            <Typography variant="h1" style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}>
+              {movie.title}
+              <LanguagePicker/>
+            </Typography>
             <Typography variant="subtitle1" style={{
               fontStyle: "italic",
             }}>{movie.tagline}</Typography>
@@ -165,7 +177,7 @@ export default (props: IComponentProps) => {
         <main style={{
           gridArea: "main",
         }}>
-          <div >
+          <div>
             <Typography style={{
               display: "inline",
             }}>Genres: </Typography>

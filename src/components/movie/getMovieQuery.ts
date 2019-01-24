@@ -1,8 +1,7 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 export default gql`
   query GetMovie ($id: Int!) {
-    language @client
     movie (id: $id) {
         id
         original_title
