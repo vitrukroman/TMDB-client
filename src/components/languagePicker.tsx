@@ -9,18 +9,18 @@ import { useTheme } from "@material-ui/styles";
 import { Theme } from "@material-ui/core";
 import gql from "graphql-tag";
 import Query from "react-apollo/Query";
-import { GetLanguage } from "../graphql/types/GetLanguage";
 import Typography from "@material-ui/core/Typography/Typography";
+import { LanguagePicker } from "../graphql/types/LanguagePicker";
 
 
 const getLanguageQuery = gql`
-  query GetLanguage {
+  query LanguagePicker {
     language @client
   }
 `;
 
 
-class GetLanguageQuery extends Query<GetLanguage> {}
+class GetLanguageQuery extends Query<LanguagePicker> {}
 
 const LanguagePicker = () => {
   const [isExpanded, setIsExpanded] = useState(false);

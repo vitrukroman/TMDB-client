@@ -2,9 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetLanguage
+// GraphQL query operation: LanguagePicker
 // ====================================================
 
-export interface GetLanguage {
+export interface LanguagePicker {
   language: string;
 }
