@@ -12,7 +12,7 @@ import React from "react";
 import { GetMovie, GetMovieVariables } from "../../graphql/types/GetMovie";
 import { useBreakPoint } from "../../hooks/useBreakpoint";
 import Movie from "../../models/movie";
-import LanguagePicker from "../languagePicker/languagePicker";
+import LanguagePicker from "../languagePicker";
 import { ChildDataProps, graphql } from "react-apollo";
 import getMovieQuery from "./getMovieQuery";
 

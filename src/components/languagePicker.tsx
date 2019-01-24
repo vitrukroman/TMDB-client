@@ -9,7 +9,7 @@ import { useTheme } from "@material-ui/styles";
 import { Theme } from "@material-ui/core";
 import gql from "graphql-tag";
 import { ChildDataProps, graphql } from "react-apollo";
-import { LanguagePicker } from "../../graphql/types/LanguagePicker";
+import { LanguagePicker } from "../graphql/types/LanguagePicker";
 import Typography from "@material-ui/core/Typography/Typography";
 
 
@@ -18,6 +18,7 @@ const getLanguageQuery = gql`
     language @client
   }
 `;
+
 
 type ChildProps = ChildDataProps<{}, LanguagePicker>
 const LanguagePicker = graphql<{}, LanguagePicker, {}, ChildProps>(getLanguageQuery)((props) => {
