@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query GetMovie ($id: Int!) {
-    movie (id: $id) {
+  query GetMovie ($id: Int!, $language: Language!) {
+    movie (id: $id, language: $language) {
         id
         original_title
         title

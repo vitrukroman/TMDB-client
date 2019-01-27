@@ -1,6 +1,6 @@
 
 extend type Query {
-    language: String!
+    language: Language!
 }
 
 extend type Mutation {
