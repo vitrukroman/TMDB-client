@@ -4,11 +4,13 @@ import { Movie, MovieVariables } from "../../graphql/types/Movie";
 
 export const movieQuery = gql`
   query Movie ($id: Int!, $language: Language!) {
-    movie (id: $id, language: $language) {
+    movie (id: $id, language: $language){
         id
-        language
         original_title
         title
+        lang @client {
+          value
+        }
         genres {
             id
             name

@@ -1,35 +1,34 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import numeral from "numeral";
 import {
-  GetMovie_movie, GetMovie_movie_genres, GetMovie_movie_keywords,
-  GetMovie_movie_production_countries,
-  GetMovie_movie_similarMovies,
-} from "../graphql/types/GetMovie";
-import { Language } from "../graphql/types/globalTypes";
+  Movie_movie, Movie_movie_genres, Movie_movie_keywords, Movie_movie_lang,
+  Movie_movie_production_countries,
+  Movie_movie_similarMovies,
+} from "../graphql/types/Movie";
 import { assertNever } from "../utils/utils";
 import Actor from "./actor";
 
-class Movie implements GetMovie_movie {
+class Movie implements Movie_movie {
   public readonly __typename: "Movie" = "Movie";
   public readonly budget: number;
   public readonly cast: Actor[];
-  public readonly genres: GetMovie_movie_genres[];
+  public readonly genres: Movie_movie_genres[];
   public readonly id: number;
   public readonly imdb_id: string | null;
-  public readonly keywords: GetMovie_movie_keywords[];
+  public readonly keywords: Movie_movie_keywords[];
   public readonly original_title: string;
   public readonly overview: string | null;
   public readonly poster_path: string | null;
-  public readonly production_countries: GetMovie_movie_production_countries[];
+  public readonly production_countries: Movie_movie_production_countries[];
   public readonly revenue: number;
-  public readonly similarMovies: GetMovie_movie_similarMovies[];
+  public readonly similarMovies: Movie_movie_similarMovies[];
   public readonly tagline: string | null;
   public readonly title: string;
   public readonly vote_average: number;
   public readonly vote_count: number;
-  public readonly language: Language;
+  public readonly lang: Movie_movie_lang;
 
-  public constructor(props: GetMovie_movie) {
+  public constructor(props: Movie_movie) {
     this.budget = props.budget;
     this.cast = props.cast.map((cast) => new Actor(cast)).sort((person1, person2) => {
       return person1.order < person2.order ? -1 : person1.order > person2.order ? 1 : 0;
@@ -48,7 +47,7 @@ class Movie implements GetMovie_movie {
     this.title = props.title;
     this.vote_average = props.vote_average;
     this.vote_count = props.vote_count;
-    this.language = props.language;
+    this.lang = props.lang;
   }
 
   public get ratingColorHue(): 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 {

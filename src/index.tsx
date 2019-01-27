@@ -17,6 +17,7 @@ import Movie from "./components/movie/movie";
 import cache from "./graphql/cache";
 import Mutation from "./graphql/localSchema/resolvers/mutation";
 import theme from "./styles/theme";
+import { Language } from "./graphql/types/globalTypes";
 
 const typeDefs = require("./graphql/localSchema/localSchema.graphql");
 
@@ -26,10 +27,15 @@ const httpLink = new HttpLink({
 
 const stateLink = withClientState({
   cache,
-  defaults: {
-    language: "uk",
-  },
   resolvers: {
+    Query: {
+      language() {
+        return Language.en
+      },
+      movie() {
+        debugger;
+      }
+    },
     Mutation,
   },
 
