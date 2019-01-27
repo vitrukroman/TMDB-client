@@ -2,3 +2,7 @@
 extend type Query {
     language: String!
 }
+
+extend type Mutation {
+    updateLanguage(language: String!): Boolean!
+}

@@ -15,8 +15,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
 import Layout from "./components/layout";
 import Movie from "./components/movie/movie";
-import theme from "./styles/theme";
 import Mutation from "./graphql/localSchema/resolvers/mutation";
+import theme from "./styles/theme";
 
 const typeDefs = require("./graphql/localSchema/localSchema.graphql");
 

@@ -9,13 +9,12 @@ import FaceIcon from "@material-ui/icons/Face";
 import StarIcon from "@material-ui/icons/StarRounded";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
+import { ChildDataProps, graphql } from "react-apollo";
 import { GetMovie, GetMovieVariables } from "../../graphql/types/GetMovie";
 import { useBreakPoint } from "../../hooks/useBreakpoint";
 import Movie from "../../models/movie";
 import LanguagePicker from "../languagePicker";
-import { ChildDataProps, graphql } from "react-apollo";
 import getMovieQuery from "./getMovieQuery";
-
 
 interface IComponentProps {
   id: string;
@@ -42,7 +41,6 @@ export default graphql<IComponentProps, GetMovie, GetMovieVariables, ChildProps>
   const theme = useTheme<Theme>();
   const smAndUp = unstable_useMediaQuery(theme.breakpoints.up("sm"));
 
-
   if (props.data.loading) {
     return <span>loading...</span>;
   }
@@ -50,7 +48,6 @@ export default graphql<IComponentProps, GetMovie, GetMovieVariables, ChildProps>
   if (props.data.error) {
     return <span>error...</span>;
   }
-
 
   const movie = new Movie(props.data.movie!);
 
@@ -199,4 +196,3 @@ export default graphql<IComponentProps, GetMovie, GetMovieVariables, ChildProps>
     </main>
   </section>;
 });
-

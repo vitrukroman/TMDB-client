@@ -92,7 +92,7 @@ class Movie implements GetMovie_movie {
   }
 
   public get budgetRevenueDiffSign() {
-    return this.budgetRevenueDiff > 0 ? "+" : "-";
+    return this.budgetRevenueDiff > 0 ? "+" : "";
 
   }
 

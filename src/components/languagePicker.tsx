@@ -1,33 +1,47 @@
-import React, { useState } from "react";
-import LanguageIcon from "@material-ui/icons/Language";
+import { Theme } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
-import Select from "@material-ui/core/Select/Select";
-import OutlinedInput from "@material-ui/core/OutlinedInput/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import { useTheme } from "@material-ui/styles";
-import { Theme } from "@material-ui/core";
-import gql from "graphql-tag";
-import { ChildDataProps, graphql } from "react-apollo";
-import { LanguagePicker } from "../graphql/types/LanguagePicker";
+import OutlinedInput from "@material-ui/core/OutlinedInput/OutlinedInput";
+import Select from "@material-ui/core/Select/Select";
 import Typography from "@material-ui/core/Typography/Typography";
-
+import LanguageIcon from "@material-ui/icons/Language";
+import { useTheme } from "@material-ui/styles";
+import gql from "graphql-tag";
+import React, { useState } from "react";
+import { graphql } from "react-apollo";
+import { LanguagePicker } from "../graphql/types/LanguagePicker";
+import { UpdateLanguage, UpdateLanguageVariables } from "../graphql/types/UpdateLanguage";
 
 const getLanguageQuery = gql`
   query LanguagePicker {
     language @client
+    configuration {
+      images {
+        base_url
+      }
+    }
   }
 `;
 
+const withLanguage = graphql<{}, LanguagePicker>(getLanguageQuery);
 
-type ChildProps = ChildDataProps<{}, LanguagePicker>
-const LanguagePicker = graphql<{}, LanguagePicker, {}, ChildProps>(getLanguageQuery)((props) => {
+const updateLanguageMutation = gql`
+  mutation UpdateLanguage($language: String!) {
+    updateLanguage (language: $language) @client
+  }
+`;
+
+const withUpdateLanguage = graphql<{}, UpdateLanguage, UpdateLanguageVariables>(updateLanguageMutation);
+
+const LanguagePicker = withUpdateLanguage(withLanguage((props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const theme = useTheme<Theme>();
 
   if (props.data!.loading) {
     return <Typography>loading...</Typography>;
   }
+
   return <React.Fragment>
     {!isExpanded && <LanguageIcon style={{
       cursor: "pointer",
@@ -48,11 +62,15 @@ const LanguagePicker = graphql<{}, LanguagePicker, {}, ChildProps>(getLanguageQu
         Language
       </InputLabel>
       <Select
-
-        onChange={() => {
-          setIsExpanded(false)
+        onChange={(event) => {
+          props.mutate!({
+            variables: {
+              language: event.target.value,
+            },
+          });
+          setIsExpanded(false);
         }}
-        value={props.data.language}
+        value={props.data!.language}
         input={
           <OutlinedInput
             id="outlined-age-simple"
@@ -63,9 +81,9 @@ const LanguagePicker = graphql<{}, LanguagePicker, {}, ChildProps>(getLanguageQu
         <MenuItem value="en">English</MenuItem>
         <MenuItem value="uk">Українська</MenuItem>
       </Select>
+
     </FormControl>}
-  </React.Fragment>
-})
+  </React.Fragment>;
+}));
 
-
-export default LanguagePicker;
+export default withUpdateLanguage(withLanguage(LanguagePicker));

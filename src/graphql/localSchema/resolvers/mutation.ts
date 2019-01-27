@@ -6,8 +6,10 @@ const Mutation = {
       data: {
         language,
       },
-    })
-  },
-}
+    });
 
-export default Mutation
+    return true;
+  },
+};
+
+export default Mutation;
