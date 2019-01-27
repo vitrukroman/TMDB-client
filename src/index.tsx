@@ -4,7 +4,6 @@ install();
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
@@ -15,6 +14,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, RouteComponentProps } from "react-router-dom";
 import Layout from "./components/layout";
 import Movie from "./components/movie/movie";
+import cache from "./graphql/cache";
 import Mutation from "./graphql/localSchema/resolvers/mutation";
 import theme from "./styles/theme";
 
@@ -24,7 +24,6 @@ const httpLink = new HttpLink({
   uri: "http://localhost:4000",
 });
 
-const cache = new InMemoryCache();
 const stateLink = withClientState({
   cache,
   defaults: {
@@ -33,6 +32,7 @@ const stateLink = withClientState({
   resolvers: {
     Mutation,
   },
+
   typeDefs,
 });
 

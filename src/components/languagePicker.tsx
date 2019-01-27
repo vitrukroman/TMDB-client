@@ -10,8 +10,8 @@ import { useTheme } from "@material-ui/styles";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { graphql } from "react-apollo";
-import { UpdateLanguage, UpdateLanguageVariables } from "../graphql/types/UpdateLanguage";
 import { LanguagePicker } from "../graphql/types/LanguagePicker";
+import { UpdateLanguage, UpdateLanguageVariables } from "../graphql/types/UpdateLanguage";
 
 const getLanguageQuery = gql`
   query LanguagePicker {
