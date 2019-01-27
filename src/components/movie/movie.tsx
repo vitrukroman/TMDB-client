@@ -10,13 +10,14 @@ import StarIcon from "@material-ui/icons/StarRounded";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
 import { ChildDataProps, graphql } from "react-apollo";
-import withLanguage from "../../containers/withLanguage";
 import { GetMovie, GetMovieVariables } from "../../graphql/types/GetMovie";
 import { Language } from "../../graphql/types/globalTypes";
 import { useBreakPoint } from "../../hooks/useBreakpoint";
 import Movie from "../../models/movie";
 import LanguagePicker from "../languagePicker";
 import getMovieQuery from "./getMovieQuery";
+import { GetLanguage } from "../../graphql/types/GetLanguage";
+import gql from "graphql-tag";
 
 interface IComponentProps {
   id: string;
@@ -31,9 +32,21 @@ const useStyles = makeStyles({
 
 type ChildProps = ChildDataProps<IComponentProps, GetMovie, GetMovieVariables>;
 
-export default withLanguage(
+export default graphql<IComponentProps, GetLanguage, {},
+  IComponentProps & {
+  language: Language
+}>(gql`
+  query GetLanguage {
+    language
+  }
+`, {
+  props: (params) => ({
+    language: params.data!.language!,
+    id: params.ownProps.id,
+  }),
+})(
   graphql<IComponentProps & {
-    language: Language,
+    language: Language
   }, GetMovie, GetMovieVariables, ChildProps>(getMovieQuery, {
     options: (params) => ({
       variables: {

@@ -10,8 +10,8 @@ import { useTheme } from "@material-ui/styles";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { graphql } from "react-apollo";
-import { LanguagePicker } from "../graphql/types/LanguagePicker";
 import { UpdateLanguage, UpdateLanguageVariables } from "../graphql/types/UpdateLanguage";
+import { LanguagePicker } from "../graphql/types/LanguagePicker";
 
 const getLanguageQuery = gql`
   query LanguagePicker {
@@ -70,7 +70,7 @@ const LanguagePicker = withUpdateLanguage(withLanguage((props) => {
           });
           setIsExpanded(false);
         }}
-        value={props.data!.language}
+        value={props.data!.language!}
         input={
           <OutlinedInput
             id="outlined-age-simple"
@@ -86,4 +86,4 @@ const LanguagePicker = withUpdateLanguage(withLanguage((props) => {
   </React.Fragment>;
 }));
 
-export default withUpdateLanguage(withLanguage(LanguagePicker));
+export default LanguagePicker;
