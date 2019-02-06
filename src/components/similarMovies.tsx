@@ -66,9 +66,7 @@ export default (props: IComponentProps) => {
           display: "flex",
           overflow: "scroll",
         }}>
-          {result.data!.similarMovies.sort((movie1, movie2) => {
-            return movie2.popularity - movie1.popularity ;
-          }).map((mov) => {
+          {result.data!.similarMovies.map((mov) => {
             const movie = new Movie(mov);
             const src = [
               result.data!.configuration.images.base_url,
