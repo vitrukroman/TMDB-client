@@ -1,5 +1,4 @@
 import { Theme } from "@material-ui/core";
-import Badge from "@material-ui/core/Badge/Badge";
 import Chip from "@material-ui/core/Chip/Chip";
 import { green, red } from "@material-ui/core/colors";
 import unstable_useMediaQuery from "@material-ui/core/es/useMediaQuery/unstable_useMediaQuery";
@@ -9,7 +8,7 @@ import { capitalize } from "@material-ui/core/utils/helpers";
 import ExtensionIcon from "@material-ui/icons/Extension";
 import FaceIcon from "@material-ui/icons/Face";
 import StarIcon from "@material-ui/icons/StarRounded";
-import { makeStyles, useTheme } from "@material-ui/styles";
+import { useTheme } from "@material-ui/styles";
 import gql from "graphql-tag";
 import React from "react";
 import Query from "react-apollo/Query";
@@ -18,6 +17,7 @@ import { GetLanguage } from "../../graphql/types/GetLanguage";
 import { useBreakPoint } from "../../hooks/useBreakpoint";
 import Movie from "../../models/movie";
 import LanguagePicker from "../languagePicker";
+import RatingBadge from "../ratingBadge";
 import SimilarMovies from "../similarMovies";
 import { movieQuery, MovieQuery } from "./movieQuery";
 
@@ -25,17 +25,9 @@ interface IComponentProps {
   id: string;
 }
 
-const useStyles = makeStyles({
-  badge: {
-    padding: "0 4px",
-    width: "auto",
-  },
-});
-
 class GetLanguageQuery extends Query<GetLanguage> {}
 
 export default (props: IComponentProps) => {
-  const classes = useStyles();
   const breakpoint = useBreakPoint();
   const theme = useTheme<Theme>();
   const smAndUp = unstable_useMediaQuery(theme.breakpoints.up("sm"));
@@ -141,24 +133,7 @@ export default (props: IComponentProps) => {
                 alignItems: "center",
 
               }}>
-                <div style={{
-                  backgroundColor: green[movie.ratingColorHue],
-                  borderRadius: "1.25rem",
-                  width: "2.5rem",
-                  textAlign: "center",
-                  marginRight: 16,
-                }}>
-                  <Badge badgeContent={movie.vote_count} color="secondary" classes={{
-                    badge: classes.badge,
-                  }}>
-                    <Typography variant="h2" style={{
-                      lineHeight: "2.5rem",
-                      ...(movie.vote_average >= 6 && {
-                        color: "white",
-                      }),
-                    }}>{movie.vote_average}</Typography>
-                  </Badge>
-                </div>
+              <RatingBadge movie={movie}/>
               </div>
               <div style={{
                 flex: "1 1 auto",

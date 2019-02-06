@@ -4,10 +4,13 @@ import {
   GetMovie_movie, GetMovie_movie_genres, GetMovie_movie_keywords,
   GetMovie_movie_production_countries,
 } from "../graphql/types/GetMovie";
+import { SimilarMovies_similarMovies } from "../graphql/types/SimilarMovies";
 import { assertNever } from "../utils/utils";
 import Actor from "./actor";
 
-class Movie implements GetMovie_movie {
+type IMovie  = GetMovie_movie & SimilarMovies_similarMovies;
+
+class Movie implements IMovie {
   public readonly __typename: "Movie" = "Movie";
   public readonly budget: number;
   public readonly cast: Actor[];
@@ -24,25 +27,29 @@ class Movie implements GetMovie_movie {
   public readonly title: string;
   public readonly vote_average: number;
   public readonly vote_count: number;
+  public readonly popularity: number;
+  public readonly release_date: string;
 
-  public constructor(props: GetMovie_movie) {
-    this.budget = props.budget;
-    this.cast = props.cast.map((cast) => new Actor(cast)).sort((person1, person2) => {
+  public constructor(props: Partial<GetMovie_movie & SimilarMovies_similarMovies>) {
+    this.budget = props.budget || 0;
+    this.cast = (props.cast || []).map((cast) => new Actor(cast)).sort((person1, person2) => {
       return person1.order < person2.order ? -1 : person1.order > person2.order ? 1 : 0;
     });
-    this.genres = [...props.genres];
-    this.id = props.id;
-    this.imdb_id = props.imdb_id;
-    this.keywords = props.keywords === null ? [] : props.keywords;
-    this.original_title = props.original_title;
-    this.overview = props.overview;
-    this.poster_path = props.poster_path;
-    this.production_countries = props.production_countries;
-    this.revenue = props.revenue;
-    this.tagline = props.tagline;
-    this.title = props.title;
-    this.vote_average = props.vote_average;
-    this.vote_count = props.vote_count;
+    this.genres = [...(props.genres || [])];
+    this.id = props.id || 0;
+    this.imdb_id = props.imdb_id || "";
+    this.keywords = props.keywords || [];
+    this.original_title = props.original_title || "";
+    this.overview = props.overview || "";
+    this.poster_path = props.poster_path || "";
+    this.production_countries = props.production_countries || [];
+    this.revenue = props.revenue || 0;
+    this.tagline = props.tagline || "";
+    this.title = props.title || "";
+    this.vote_average = props.vote_average || 0;
+    this.vote_count = props.vote_count || 0;
+    this.popularity = props.popularity || 0;
+    this.release_date = props.release_date || "";
   }
 
   public get ratingColorHue(): 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 {
@@ -82,6 +89,10 @@ class Movie implements GetMovie_movie {
 
   public get mainCast() {
     return this.cast.slice(0, 10);
+  }
+
+  public get releaseYear() {
+    return this.release_date.slice(0, 4);
   }
 
   public get budgetRevenueDiff() {
