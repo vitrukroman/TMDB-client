@@ -39,6 +39,28 @@ export interface GetMovie_movie_cast {
   gender: number | null;
 }
 
+export interface GetMovie_movie_images_backdrops {
+  __typename: "MovieImage";
+  aspect_ratio: number;
+  file_path: string;
+  height: number;
+  width: number;
+}
+
+export interface GetMovie_movie_images_posters {
+  __typename: "MovieImage";
+  aspect_ratio: number;
+  file_path: string;
+  height: number;
+  width: number;
+}
+
+export interface GetMovie_movie_images {
+  __typename: "MovieImages";
+  backdrops: GetMovie_movie_images_backdrops[];
+  posters: GetMovie_movie_images_posters[];
+}
+
 export interface GetMovie_movie {
   __typename: "Movie";
   id: number;
@@ -57,6 +79,7 @@ export interface GetMovie_movie {
   tagline: string | null;
   poster_path: string | null;
   cast: GetMovie_movie_cast[];
+  images: GetMovie_movie_images;
 }
 
 export interface GetMovie_configuration_images {
