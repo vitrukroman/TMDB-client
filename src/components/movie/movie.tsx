@@ -18,8 +18,8 @@ import { GetLanguage } from "../../graphql/types/GetLanguage";
 import { useBreakPoint } from "../../hooks/useBreakpoint";
 import Movie from "../../models/movie";
 import LanguagePicker from "../languagePicker";
+import SimilarMovies from "../similarMovies";
 import { movieQuery, MovieQuery } from "./movieQuery";
-import Slider from "react-slick";
 
 interface IComponentProps {
   id: string;
@@ -40,6 +40,7 @@ export default (props: IComponentProps) => {
   const theme = useTheme<Theme>();
   const smAndUp = unstable_useMediaQuery(theme.breakpoints.up("sm"));
   const [t] = useTranslation();
+  const id = Number(props.id);
 
   return <GetLanguageQuery query={gql`
     query GetLanguage {
@@ -55,18 +56,10 @@ export default (props: IComponentProps) => {
         return <span>error...</span>;
       }
 
-      const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      };
-
       return <MovieQuery
         query={movieQuery}
         variables={{
-          id: Number(props.id),
+          id,
           language: languageResult.data!.language,
         }}
       >
@@ -238,30 +231,7 @@ export default (props: IComponentProps) => {
                 marginBottom: 8,
               }}>{movie.overview}</Typography>
               {cast}
-              <div>
-                <Slider
-                  {...settings}
-                >
-                  <div>
-                    <h3>1</h3>
-                  </div>
-                  <div>
-                    <h3>2</h3>
-                  </div>
-                  <div>
-                    <h3>3</h3>
-                  </div>
-                  <div>
-                    <h3>4</h3>
-                  </div>
-                  <div>
-                    <h3>5</h3>
-                  </div>
-                  <div>
-                    <h3>6</h3>
-                  </div>
-                </Slider>
-              </div>
+              <SimilarMovies id={id}/>
             </main>
           </section>;
         }}

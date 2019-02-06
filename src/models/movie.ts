@@ -3,7 +3,6 @@ import numeral from "numeral";
 import {
   GetMovie_movie, GetMovie_movie_genres, GetMovie_movie_keywords,
   GetMovie_movie_production_countries,
-  GetMovie_movie_similarMovies,
 } from "../graphql/types/GetMovie";
 import { assertNever } from "../utils/utils";
 import Actor from "./actor";
@@ -21,7 +20,6 @@ class Movie implements GetMovie_movie {
   public readonly poster_path: string | null;
   public readonly production_countries: GetMovie_movie_production_countries[];
   public readonly revenue: number;
-  public readonly similarMovies: GetMovie_movie_similarMovies[];
   public readonly tagline: string | null;
   public readonly title: string;
   public readonly vote_average: number;
@@ -41,7 +39,6 @@ class Movie implements GetMovie_movie {
     this.poster_path = props.poster_path;
     this.production_countries = props.production_countries;
     this.revenue = props.revenue;
-    this.similarMovies = [...props.similarMovies];
     this.tagline = props.tagline;
     this.title = props.title;
     this.vote_average = props.vote_average;

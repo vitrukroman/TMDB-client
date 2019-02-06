@@ -34,20 +34,6 @@ export const movieQuery = gql`
           character
           gender
         }
-        images {
-          backdrops {
-            aspect_ratio
-            file_path
-            height
-            width
-          }
-          posters {
-            aspect_ratio
-            file_path
-            height
-            width
-          }
-        }
     }
     configuration {
       images {
