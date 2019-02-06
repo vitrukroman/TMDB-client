@@ -9,9 +9,9 @@ import LanguageIcon from "@material-ui/icons/Language";
 import { useTheme } from "@material-ui/styles";
 import gql from "graphql-tag";
 import React, { useState } from "react";
-import { graphql } from "react-apollo";
+import Mutation from "react-apollo/Mutation";
+import Query from "react-apollo/Query";
 import { LanguagePicker } from "../graphql/types/LanguagePicker";
-import { UpdateLanguage, UpdateLanguageVariables } from "../graphql/types/UpdateLanguage";
 
 const getLanguageQuery = gql`
   query LanguagePicker {
@@ -24,66 +24,77 @@ const getLanguageQuery = gql`
   }
 `;
 
-const withLanguage = graphql<{}, LanguagePicker>(getLanguageQuery);
-
 const updateLanguageMutation = gql`
   mutation UpdateLanguage($language: String!) {
     updateLanguage (language: $language) @client
   }
 `;
 
-const withUpdateLanguage = graphql<{}, UpdateLanguage, UpdateLanguageVariables>(updateLanguageMutation);
+class LanguagePickerQuery extends Query <LanguagePicker> {}
+class UpdateLanguageMutation extends Mutation {}
 
-const LanguagePicker = withUpdateLanguage(withLanguage((props) => {
+const LanguagePicker = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const theme = useTheme<Theme>();
 
-  if (props.data!.loading) {
-    return <Typography>loading...</Typography>;
-  }
+  return <LanguagePickerQuery
+    query={getLanguageQuery}>
+    {(result) => {
+      if (result.loading) {
+        return <Typography>loading...</Typography>;
+      }
 
-  return <React.Fragment>
-    {!isExpanded && <LanguageIcon style={{
-      cursor: "pointer",
-      position: "absolute",
-      top: 8,
-      right: 8,
-    }} onClick={() => setIsExpanded(true)}/>}
-    {isExpanded && <FormControl variant="outlined" style={{
-      position: "absolute",
-      top: 8,
-      right: 8,
-      backgroundColor: theme.palette.background.default,
-      width: 100,
-    }}>
-      <InputLabel
-        htmlFor="outlined-age-simple"
-      >
-        Language
-      </InputLabel>
-      <Select
-        onChange={(event) => {
-          props.mutate!({
-            variables: {
-              language: event.target.value,
-            },
-          });
-          setIsExpanded(false);
-        }}
-        value={props.data!.language!}
-        input={
-          <OutlinedInput
-            id="outlined-age-simple"
-            labelWidth={75}
-          />
-        }
-      >
-        <MenuItem value="en">English</MenuItem>
-        <MenuItem value="uk">Українська</MenuItem>
-      </Select>
+      return <React.Fragment>
+        {!isExpanded && <LanguageIcon style={{
+          cursor: "pointer",
+          position: "absolute",
+          top: 8,
+          right: 8,
+        }} onClick={() => setIsExpanded(true)}/>}
+        {isExpanded && <FormControl variant="outlined" style={{
+          position: "absolute",
+          top: 8,
+          right: 8,
+          backgroundColor: theme.palette.background.default,
+          width: 100,
+        }}>
+          <InputLabel
+            htmlFor="outlined-age-simple"
+          >
+            Language
+          </InputLabel>
+          <UpdateLanguageMutation
+            mutation={updateLanguageMutation}
+          >
+            {(mutate) => {
+              return <Select
+                onChange={(event) => {
+                  mutate({
+                    variables: {
+                      language: event.target.value,
+                    },
+                  });
+                  setIsExpanded(false);
+                }}
+                value={result.data!.language}
+                input={
+                  <OutlinedInput
+                    id="outlined-age-simple"
+                    labelWidth={75}
+                  />
+                }
+              >
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="uk">Українська</MenuItem>
+              </Select>;
+            }}
+          </UpdateLanguageMutation>
 
-    </FormControl>}
-  </React.Fragment>;
-}));
+        </FormControl>}
+      </React.Fragment>;
+    }}
+  </LanguagePickerQuery>;
+
+};
 
 export default LanguagePicker;

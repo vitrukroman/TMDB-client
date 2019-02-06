@@ -5,7 +5,6 @@ import {
   GetMovie_movie_production_countries,
   GetMovie_movie_similarMovies,
 } from "../graphql/types/GetMovie";
-import { Language } from "../graphql/types/globalTypes";
 import { assertNever } from "../utils/utils";
 import Actor from "./actor";
 
@@ -27,7 +26,6 @@ class Movie implements GetMovie_movie {
   public readonly title: string;
   public readonly vote_average: number;
   public readonly vote_count: number;
-  public readonly language: Language;
 
   public constructor(props: GetMovie_movie) {
     this.budget = props.budget;
@@ -48,7 +46,6 @@ class Movie implements GetMovie_movie {
     this.title = props.title;
     this.vote_average = props.vote_average;
     this.vote_count = props.vote_count;
-    this.language = props.language;
   }
 
   public get ratingColorHue(): 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 {

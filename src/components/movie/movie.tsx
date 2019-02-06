@@ -5,6 +5,7 @@ import { green, red } from "@material-ui/core/colors";
 import unstable_useMediaQuery from "@material-ui/core/es/useMediaQuery/unstable_useMediaQuery";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
+import ExtensionIcon from "@material-ui/icons/Extension";
 import FaceIcon from "@material-ui/icons/Face";
 import StarIcon from "@material-ui/icons/StarRounded";
 import { makeStyles, useTheme } from "@material-ui/styles";
@@ -70,6 +71,12 @@ export default (props: IComponentProps) => {
 
           const genreChips = movie.genres.map((genre) => {
             return <Chip icon={<StarIcon/>} label={genre.name} key={genre.id} variant="outlined" style={{
+              margin: "0 2px 2px 0",
+            }}/>;
+          });
+
+          const keywordChips = movie.keywords.map((keyword) => {
+            return <Chip icon={<ExtensionIcon/>} label={keyword.name} key={keyword.id}  style={{
               margin: "0 2px 2px 0",
             }}/>;
           });
@@ -196,6 +203,14 @@ export default (props: IComponentProps) => {
                 <div style={{
                   display: "inline",
                 }}>{genreChips}</div>
+              </div>
+              <div>
+                <Typography style={{
+                  display: "inline",
+                }}>Keywords: </Typography>
+                <div style={{
+                  display: "inline",
+                }}>{keywordChips}</div>
               </div>
               <div style={{
                 marginBottom: 8,

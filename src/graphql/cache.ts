@@ -1,11 +1,30 @@
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
-import { GetMovie_movie } from "./types/GetMovie";
+import gql from "graphql-tag";
+import { GetLanguage } from "./types/GetLanguage";
 
-export default new InMemoryCache({
+const cache = new InMemoryCache({
+
   dataIdFromObject: (obj) => {
+    const getLanguageQuery = gql`
+      query GetLanguage {
+        language @client
+      }
+    `;
+
+    const cacheData: GetLanguage = cache.readQuery<GetLanguage>({
+      query: getLanguageQuery,
+    })!;
+
     switch (obj.__typename) {
-      case "Movie": return `Movie:${obj.id}:${(obj as any as GetMovie_movie).language}`; // use `key` as the primary key
-      default: return defaultDataIdFromObject(obj); // fall back to default handling
+      case "Movie":
+        return `Movie:${obj.id}:${cacheData.language}`;
+      case "Keyword":
+        return `Keyword:${obj.id}:${cacheData.language}`;
+      case "Genre":
+        return `Genre:${obj.id}:${cacheData.language}`;
+      default:
+        return defaultDataIdFromObject(obj); // fall back to default handling
     }
   },
 });
+export default cache;

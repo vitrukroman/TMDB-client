@@ -1,12 +1,11 @@
 import gql from "graphql-tag";
 import Query from "react-apollo/Query";
-import { Movie, MovieVariables } from "../../graphql/types/Movie";
+import { GetMovie, GetMovieVariables } from "../../graphql/types/GetMovie";
 
 export const movieQuery = gql`
-  query Movie ($id: Int!, $language: Language!) {
+  query GetMovie ($id: Int!, $language: Language!) {
     movie (id: $id, language: $language) {
         id
-        language
         original_title
         title
         genres {
@@ -49,4 +48,4 @@ export const movieQuery = gql`
 }
 `;
 
-export class MovieQuery extends Query<Movie, MovieVariables> {}
+export class MovieQuery extends Query<GetMovie, GetMovieVariables> {}
