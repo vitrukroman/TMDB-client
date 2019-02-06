@@ -114,6 +114,7 @@ export default (props: IComponentProps) => {
             padding: 8,
             gridGap: 8,
             display: "grid",
+            gridTemplateColumns: "100%",
             gridTemplateAreas: `
           "header"
           "budgetInfo"
@@ -127,6 +128,7 @@ export default (props: IComponentProps) => {
           "poster main"
         `,
               gridTemplateRows: "56px 24px",
+              gridTemplateColumns: "50% 50%",
             }),
           }}>
 
@@ -166,6 +168,7 @@ export default (props: IComponentProps) => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  position: "relative",
                 }}>
                   {movie.title}
                   <LanguagePicker/>
@@ -231,7 +234,7 @@ export default (props: IComponentProps) => {
                 marginBottom: 8,
               }}>{movie.overview}</Typography>
               {cast}
-              <SimilarMovies id={id}/>
+              <SimilarMovies id={id} language={languageResult.data!.language}/>
             </main>
           </section>;
         }}

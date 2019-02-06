@@ -5,9 +5,10 @@ interface IComponentProps {
 }
 
 const Layout = (props: IComponentProps) => {
+
   return <div style={{
-    maxWidth: 1000,
     margin: "auto",
+    maxWidth: 1000,
   }}>{props.children}</div>;
 };
 

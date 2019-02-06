@@ -7,7 +7,8 @@
       "cast": "actors",
       "tags": "tags",
       "countries": "countries",
-      "language": "language"
+      "language": "language",
+      "similar movies": "similar movies"
     }
   },
   "uk": {
@@ -18,7 +19,8 @@
       "cast": "актори",
       "tags": "теги",
       "countries": "країни",
-      "language": "мова"
+      "language": "мова",
+      "similar movies": "схожі фільми"
     }
   }
 }

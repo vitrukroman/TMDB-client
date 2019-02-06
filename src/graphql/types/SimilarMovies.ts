@@ -7,8 +7,19 @@ import { Language } from "./globalTypes";
 // GraphQL query operation: SimilarMovies
 // ====================================================
 
+export interface SimilarMovies_configuration_images {
+  __typename: "ImageConfiguration";
+  base_url: string;
+}
+
+export interface SimilarMovies_configuration {
+  __typename: "Configuration";
+  images: SimilarMovies_configuration_images;
+}
+
 export interface SimilarMovies_similarMovies {
   __typename: "Movie";
+  id: number;
   title: string;
   release_date: string;
   popularity: number;
@@ -17,6 +28,7 @@ export interface SimilarMovies_similarMovies {
 }
 
 export interface SimilarMovies {
+  configuration: SimilarMovies_configuration;
   similarMovies: SimilarMovies_similarMovies[];
 }
 

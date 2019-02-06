@@ -1,7 +1,7 @@
-import { Movie_movie_cast } from "../graphql/types/Movie";
+import { GetMovie_movie_cast } from "../graphql/types/GetMovie";
 import { EGender } from "../types/gender";
 
-class Actor implements Movie_movie_cast {
+class Actor implements GetMovie_movie_cast {
   // tslint:disable-next-line
   public readonly __typename: "Cast" = "Cast";
   public readonly character: string;
@@ -9,7 +9,7 @@ class Actor implements Movie_movie_cast {
   public readonly name: string;
   public readonly order: number;
 
-  public constructor(props: Movie_movie_cast) {
+  public constructor(props: GetMovie_movie_cast) {
     this.character = props.character;
     this.name = props.name;
     this.order = props.order;
