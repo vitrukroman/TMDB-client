@@ -19,12 +19,6 @@ export interface GetMovie_movie_keywords {
   name: string;
 }
 
-export interface GetMovie_movie_similarMovies {
-  __typename: "Movie";
-  id: number;
-  title: string;
-}
-
 export interface GetMovie_movie_production_countries {
   __typename: "ProductionCountry";
   iso_3166_1: string;
@@ -71,7 +65,6 @@ export interface GetMovie_movie {
   imdb_id: string | null;
   overview: string | null;
   keywords: GetMovie_movie_keywords[] | null;
-  similarMovies: GetMovie_movie_similarMovies[];
   production_countries: GetMovie_movie_production_countries[];
   vote_average: number;
   vote_count: number;

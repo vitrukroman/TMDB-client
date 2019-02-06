@@ -19,10 +19,6 @@ export const movieQuery = gql`
             id
             name
         }
-        similarMovies {
-            id
-            title
-        }
         production_countries {
           iso_3166_1
           name
