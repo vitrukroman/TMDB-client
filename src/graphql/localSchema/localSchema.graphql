@@ -6,3 +6,11 @@ extend type Query {
 extend type Mutation {
     updateLanguage(language: String!): Boolean!
 }
+
+type MovieLang {
+    value: Language!
+}
+
+extend type Movie {
+    lang: MovieLang!
+}
