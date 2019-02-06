@@ -16,6 +16,7 @@ import Layout from "./components/layout";
 import Movie from "./components/movie/movie";
 import cache from "./graphql/cache";
 import Mutation from "./graphql/localSchema/resolvers/mutation";
+import "./localization/i18n";
 import theme from "./styles/theme";
 
 const typeDefs = require("./graphql/localSchema/localSchema.graphql");

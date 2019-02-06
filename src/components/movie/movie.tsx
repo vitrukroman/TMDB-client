@@ -5,6 +5,7 @@ import { green, red } from "@material-ui/core/colors";
 import unstable_useMediaQuery from "@material-ui/core/es/useMediaQuery/unstable_useMediaQuery";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
+import { capitalize } from "@material-ui/core/utils/helpers";
 import ExtensionIcon from "@material-ui/icons/Extension";
 import FaceIcon from "@material-ui/icons/Face";
 import StarIcon from "@material-ui/icons/StarRounded";
@@ -12,6 +13,7 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import gql from "graphql-tag";
 import React from "react";
 import Query from "react-apollo/Query";
+import { useTranslation } from "react-i18next";
 import { GetLanguage } from "../../graphql/types/GetLanguage";
 import { useBreakPoint } from "../../hooks/useBreakpoint";
 import Movie from "../../models/movie";
@@ -36,6 +38,7 @@ export default (props: IComponentProps) => {
   const breakpoint = useBreakPoint();
   const theme = useTheme<Theme>();
   const smAndUp = unstable_useMediaQuery(theme.breakpoints.up("sm"));
+  const [t] = useTranslation();
 
   return <GetLanguageQuery query={gql`
     query GetLanguage {
@@ -76,7 +79,7 @@ export default (props: IComponentProps) => {
           });
 
           const keywordChips = movie.keywords.map((keyword) => {
-            return <Chip icon={<ExtensionIcon/>} label={keyword.name} key={keyword.id}  style={{
+            return <Chip icon={<ExtensionIcon/>} label={keyword.name} key={keyword.id} style={{
               margin: "0 2px 2px 0",
             }}/>;
           });
@@ -91,7 +94,7 @@ export default (props: IComponentProps) => {
           const cast = <Grid container justify="flex-start" alignItems="center">
             <Typography style={{
               margin: 2,
-            }}>Cast: </Typography>
+            }}>{capitalize(t("cast"))}: </Typography>
             {movie.mainCast.map((actor) => {
               let color: "primary" | "secondary" = "primary";
 
@@ -176,7 +179,7 @@ export default (props: IComponentProps) => {
             }}>
               <Typography style={{
                 display: "inline",
-              }}>Budget/Revenue: {movie.budgetFormatted} </Typography>
+              }}>{capitalize(t("budget"))}/{capitalize(t("revenue"))}: {movie.budgetFormatted} </Typography>
               <Typography style={{
                 display: "inline",
                 ...(movie.budgetRevenueDiff > 0 && {
@@ -199,7 +202,7 @@ export default (props: IComponentProps) => {
               <div>
                 <Typography style={{
                   display: "inline",
-                }}>Genres: </Typography>
+                }}>{capitalize(t("genres"))}: </Typography>
                 <div style={{
                   display: "inline",
                 }}>{genreChips}</div>
@@ -207,7 +210,7 @@ export default (props: IComponentProps) => {
               <div>
                 <Typography style={{
                   display: "inline",
-                }}>Keywords: </Typography>
+                }}>{capitalize(t("tags"))}: </Typography>
                 <div style={{
                   display: "inline",
                 }}>{keywordChips}</div>
@@ -217,7 +220,7 @@ export default (props: IComponentProps) => {
               }}>
                 <Typography style={{
                   display: "inline",
-                }}>Countries: </Typography>
+                }}>{capitalize(t("countries"))}: </Typography>
                 <div style={{
                   display: "inline",
                 }}>{productionCountries}</div>

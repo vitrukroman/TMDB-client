@@ -1,0 +1,24 @@
+{
+  "en": {
+    "translation": {
+      "budget": "budget",
+      "revenue": "revenue",
+      "genres": "genres",
+      "cast": "actors",
+      "tags": "tags",
+      "countries": "countries",
+      "language": "language"
+    }
+  },
+  "uk": {
+    "translation": {
+      "budget": "бюджет",
+      "revenue": "дохід",
+      "genres": "жанри",
+      "cast": "актори",
+      "tags": "теги",
+      "countries": "країни",
+      "language": "мова"
+    }
+  }
+}
